@@ -23,7 +23,7 @@ public class ArenaPreferences {
     }
 
     public void removePlayer(Player player) {
-        // todo refresh guis
+        TeamSelectorGUI.updateGUIs();
         if (selections.remove(player) != null) {
             Bukkit.getPluginManager().callEvent(new TeamSelectorAbortEvent(player));
         }
