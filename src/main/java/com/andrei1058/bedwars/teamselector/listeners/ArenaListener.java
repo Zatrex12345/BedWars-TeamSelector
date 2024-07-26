@@ -12,6 +12,7 @@ import com.andrei1058.bedwars.teamselector.teamselector.TeamManager;
 import com.andrei1058.bedwars.teamselector.teamselector.TeamSelectorAssigner;
 import com.andrei1058.bedwars.teamselector.teamselector.TeamSelectorGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
@@ -24,9 +25,12 @@ public class ArenaListener implements Listener {
         if (e.isSpectator()) return;
         if (e.getArena() == null) return;
         if (e.getArena().getStatus() == GameState.waiting || e.getArena().getStatus() == GameState.starting) {
+            Player player = e.getPlayer();
             Bukkit.getScheduler().runTaskLater(Main.plugin, () -> {
-                if (e.getArena().isPlayer(e.getPlayer()) || e.getArena().getStatus() != GameState.playing) {
-                    TeamSelectorGUI.giveItem(e.getPlayer(), null);
+                if (e.getArena().isPlayer(player) || e.getArena().getStatus() != GameState.playing) {
+                    if (!player.hasPermission("bw.teamsel")) return;
+
+                    TeamSelectorGUI.giveItem(player, null);
                 }
             }, 30L);
         }

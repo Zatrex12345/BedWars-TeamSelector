@@ -28,8 +28,8 @@ public class Main extends JavaPlugin {
      */
     private static void registerListeners(Listener @NotNull ... listeners) {
         PluginManager pm = Bukkit.getPluginManager();
-        for (Listener l : listeners) {
-            pm.registerEvents(l, plugin);
+        for (Listener listener : listeners) {
+            pm.registerEvents(listener, plugin);
         }
     }
 
@@ -45,7 +45,7 @@ public class Main extends JavaPlugin {
         }
 
         var registration = Bukkit.getServicesManager().getRegistration(BedWars.class);
-        if (null == registration) {
+        if (registration == null) {
             getLogger().severe("Cannot hook into BedWars1058.");
             Bukkit.getPluginManager().disablePlugin(plugin);
             return;
